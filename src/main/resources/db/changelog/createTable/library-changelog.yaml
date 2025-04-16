@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1744812591556-1
+      author: dmazurev
+      runOnChange: true
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_library
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: version
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status
+                  type: SMALLINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: create_at
+                  type: DATE
+              - column:
+                  name: update_at
+                  type: DATE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: author
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: url
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: size
+                  type: INT
+            tableName: library
+

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: Library
+
+  liquibase:
+    change-log: classpath:/db/changelog/master-changelog.yaml
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database: postgresql
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library
+    username: postgres
+    password: postgres
+
+server:
+  port: 8081

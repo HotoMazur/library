@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include: 
+        file: createTable/library-changelog.yaml
+        relativeToChangelogFile: true
