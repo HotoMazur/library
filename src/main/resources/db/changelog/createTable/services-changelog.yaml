@@ -5,54 +5,59 @@ databaseChangeLog:
       runOnChange: true
       changes:
         - createTable:
+            tableName: services
             columns:
               - column:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: pk_library
+                    primaryKeyName: pk_services
                   name: id
                   type: UUID
               - column:
-                  constraints:
-                    nullable: false
                   name: name
                   type: VARCHAR(255)
               - column:
                   name: description
                   type: VARCHAR(255)
               - column:
-                  constraints:
-                    nullable: false
                   name: version
+                  type: VARCHAR(12)
+              - column:
+                  name: path
                   type: VARCHAR(255)
               - column:
-                  constraints:
-                    nullable: false
-                  name: status
-                  type: SMALLINT
+                  name: type
+                  type: VARCHAR(255)
               - column:
-                  constraints:
-                    nullable: false
+                  name: category_id
+                  type: UUID
+              - column:
+                  name: user_id
+                  type: UUID
+              - column:
+                  name: checksum
+                  type: varchar(255)
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+              - column:
                   name: create_at
-                  type: DATE
+                  type: timestamp
               - column:
                   name: update_at
-                  type: DATE
+                  type: timestamp
               - column:
-                  constraints:
-                    nullable: false
                   name: author
                   type: VARCHAR(255)
               - column:
-                  constraints:
-                    nullable: false
-                  name: url
-                  type: VARCHAR(255)
-              - column:
-                  constraints:
-                    nullable: false
                   name: size
-                  type: INT
-            tableName: library
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: services
+            baseColumnNames: category_id
+            referencedTableName: category
+            referencedColumnNames: id
+            constraintName: fk_services_category_id
 

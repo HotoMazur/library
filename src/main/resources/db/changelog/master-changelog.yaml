@@ -1,4 +1,13 @@
 databaseChangeLog:
-  - include: 
-        file: createTable/library-changelog.yaml
+  - include:
+        file: createTable/category-changelog.yaml
         relativeToChangelogFile: true
+  - include: 
+        file: createTable/services-changelog.yaml
+        relativeToChangelogFile: true
+  - include:
+      file: createTable/tags-changelog.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: createTable/services_tags-changelog.yaml
+      relativeToChangelogFile: true

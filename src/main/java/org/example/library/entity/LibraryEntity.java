@@ -20,30 +20,57 @@ public class LibraryEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "description", nullable = true)
-    private String description;
-
-    @Column(name = "version", nullable = false)
+    @Column(name = "version")
     private String version;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "path")
+    private String path;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "category")
+    private String category;
+
+    @Column(name = "owner_id")
+    private String ownerId;
+
+    @Column(name = "checksum")
+    private String checksum;
+
+    @Column(name = "status")
     private LibraryStatus status;
 
-    @Column(name = "create_at", nullable = false)
+    @Column(name = "author")
+    private String author;
+
+    @Column(name = "size")
+    private long size;
+
+    @Column(name = "create_at")
     private LocalDate createAt;
 
     @Column(name = "update_at", nullable = true)
     private LocalDate updateAt;
 
-    @Column(name = "author", nullable = false)
-    private String author;
-
-    @Column(name = "url", nullable = false)
-    private String url;
-
-    @Column(name = "size", nullable = false)
-    private Integer size;
+    public LibraryEntity(UUID id, String name, String version, String description, String type, String category, String checksum, LibraryStatus status, String author, long size, LocalDate createAt, LocalDate updateAt) {
+        this.id = id;
+        this.name = name;
+        this.version = version;
+        this.description = description;
+        this.type = type;
+        this.category = category;
+        this.checksum = checksum;
+        this.status = status;
+        this.author = author;
+        this.size = size;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+    }
 }

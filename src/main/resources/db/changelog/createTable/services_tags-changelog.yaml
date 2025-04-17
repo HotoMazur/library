@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: admin
+      runOnChange: true
+      changes:
+        - createTable:
+            tableName: services_tags
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_services_tags
+                  name: id
+                  type: UUID
+              - column:
+                  name : service_id
+                  type : UUID
+              - column:
+                  name: tag_id
+                  type: UUID
+        - addForeignKeyConstraint:
+            baseTableName: services_tags
+            baseColumnNames: service_id
+            referencedTableName: services
+            referencedColumnNames: id
+            constraintName: fk_tags_service_id
+        - addForeignKeyConstraint:
+            baseTableName: services_tags
+            baseColumnNames: tag_id
+            referencedTableName: tags
+            referencedColumnNames: id
+            constraintName: fk_tags_tag_id

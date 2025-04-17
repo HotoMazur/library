@@ -15,5 +15,11 @@ spring:
     username: postgres
     password: postgres
 
+  kafka:
+    bootstrap-servers: localhost:9096
+    consumer:
+      group-id: library-group
+      auto-offset-reset: earliest
+
 server:
-  port: 8081
+  port: 8085

@@ -1,10 +1,12 @@
 package org.example.library.dto;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.library.util.LibraryStatus;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -15,15 +17,23 @@ public class LibraryDto {
 
     private String name;
 
+    private String version;
+
     private String description;
 
-    private String version;
+    private String type;
+
+    private String category;
+
+    private String checksum;
 
     private LibraryStatus status;
 
     private String author;
 
-    private String url;
+    private long size;
 
-    private Integer size;
+    private LocalDate createAt;
+
+    private LocalDate updateAt;
 }
