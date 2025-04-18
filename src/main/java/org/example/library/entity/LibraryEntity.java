@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "library")
+@Table(name = "services")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,10 +35,10 @@ public class LibraryEntity {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "category")
-    private String category;
+    @Column(name = "category_id")
+    private UUID category_id;
 
-    @Column(name = "owner_id")
+    @Column(name = "user_id")
     private String ownerId;
 
     @Column(name = "checksum")
@@ -59,13 +59,13 @@ public class LibraryEntity {
     @Column(name = "update_at", nullable = true)
     private LocalDate updateAt;
 
-    public LibraryEntity(UUID id, String name, String version, String description, String type, String category, String checksum, LibraryStatus status, String author, long size, LocalDate createAt, LocalDate updateAt) {
+    public LibraryEntity(UUID id, String name, String version, String description, String type, UUID category_id, String checksum, LibraryStatus status, String author, long size, LocalDate createAt, LocalDate updateAt) {
         this.id = id;
         this.name = name;
         this.version = version;
         this.description = description;
         this.type = type;
-        this.category = category;
+        this.category_id = category_id;
         this.checksum = checksum;
         this.status = status;
         this.author = author;

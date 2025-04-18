@@ -1,30 +1,35 @@
 services:
-#  app:
-#    image: openjdk:23-jdk-alpine
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports:
-#      - "8085:8085"
-#    environment:
-#      - DB_HOST=db
-#      - DB_PORT=5432
-#      - DB_NAME=library
-#      - DB_USER=postgres
-#      - DB_PASSWORD=postgres
-#    stdin_open: true
-#    volumes:
-#      - ./logs:/app/logs
-#    tty: true
-#    depends_on:
-#      db:
-#        condition: service_healthy
+  app:
+    image: openjdk:23-jdk-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=services
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    stdin_open: true
+    volumes:
+      - ./logs:/app/logs
+    tty: true
+    depends_on:
+      service-db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - app-network
+      - kafka-network
 
-  db:
-    container_name: library-db
+  service-db:
+    container_name: service-db
     image: postgres:15-alpine
     environment:
-      - POSTGRES_DB=library
+      - POSTGRES_DB=services
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
@@ -34,11 +39,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - app-network
 
   kafka:
     image: confluentinc/cp-kafka:latest
     hostname: kafka
     container_name: kafka
+
     ports:
       - "9096:9096"
       - "9097:9097"
@@ -47,11 +55,11 @@ services:
       KAFKA_PROCESS_ROLES: controller,broker
       KAFKA_NODE_ID: 1
       KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:9097"  # Updated to use 'kafka' hostname
-      KAFKA_LISTENERS: PLAINTEXT://kafka:9096,CONTROLLER://kafka:9097
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENERS: DOCKER://kafka:9096,CONTROLLER://kafka:9097
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9096  # Use 'kafka' hostname
+      KAFKA_ADVERTISED_LISTENERS: DOCKER://kafka:9096  # Use 'kafka' hostname
       KAFKA_LOG_DIRS: /var/lib/kafka/data
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -60,10 +68,17 @@ services:
       CLUSTER_ID: "Mk3OEYBSD34fcwNTJENDM2Qk"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./data:/var/lib/kafka/data
     networks:
       - kafka-network
+    healthcheck:
+      test: kafka-topics --bootstrap-server kafka:9096 --list
+      interval: 5s
+      timeout: 10s
+      retries: 3
+
 
 networks:
+  app-network:
+    driver: bridge
   kafka-network:
     driver: bridge

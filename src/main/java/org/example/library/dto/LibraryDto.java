@@ -23,7 +23,7 @@ public class LibraryDto {
 
     private String type;
 
-    private String category;
+    private UUID category_id;
 
     private String checksum;
 
