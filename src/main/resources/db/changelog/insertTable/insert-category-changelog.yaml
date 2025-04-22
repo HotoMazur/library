@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: admin
+      changes:
+        - insert:
+            tableName: category
+            columns:
+              - column:
+                  name: name
+                  value: 'Business'
+              - column:
+                  name: description
+                  value: 'Business description'
+        - insert:
+            tableName: category
+            columns:
+              - column:
+                  name: name
+                  value: 'Medicine'
+              - column:
+                  name: description
+                  value: 'Medicine description'

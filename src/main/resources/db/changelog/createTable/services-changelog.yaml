@@ -57,7 +57,7 @@ databaseChangeLog:
         - addForeignKeyConstraint:
             baseTableName: services
             baseColumnNames: category_id
-            referencedTableName: category
+            referencedTableName: service_category
             referencedColumnNames: id
             constraintName: fk_services_category_id
 

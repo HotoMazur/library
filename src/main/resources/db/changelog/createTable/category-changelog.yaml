@@ -5,7 +5,7 @@ databaseChangeLog:
       runOnChange: true
       changes:
         - createTable:
-            tableName: category
+            tableName: service_category
             columns:
               - column:
                   constraints:
